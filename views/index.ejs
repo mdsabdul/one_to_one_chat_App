@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <main>
+    <div class="left">
+      <div class="top">
+        <img src="<%=user.profileimage%>" alt="">
+        <h3>
+          <%=user.username%>
+        </h3>
+      </div>
+      <div class="bottom">
+
+
+      </div>
+    </div>
+    <div class="right">
+      <div class="chatting-user">
+        <img
+          src="https://images.unsplash.com/photo-1615804157978-1e5307ae92dc?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="">
+        <h3>Sarah Doe <span>Active Now</span></h3>
+
+      </div>
+      <div class="messages">
+        <div class="message">
+          <img
+            src="https://images.unsplash.com/photo-1615804157978-1e5307ae92dc?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="">
+          <p>Something</p>
+        </div>
+        <div class="message">
+          <p>Something</p>
+        </div>
+      </div>
+      <div class="typing-con">
+        <input type="text" name="" id="" placeholder="Wrire your message...">
+        <button><i class="ri-send-plane-fill"></i></button>
+      </div>
+    </div>
+
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"
+    integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+
+    var user = "<%=user.username%>"
+    socket.emit("join", user)
+
+    axios.get("/getOnlineUser").then(response => {
+      response.data.onlineUsers.forEach(onlineUSer => {
+        appendchat(onlineUSer.profileimage, onlineUSer.username)
+      });
+    })
+
+
+    document.querySelector(".typing-con button").addEventListener("click", function () {
+      const message = document.querySelector(".typing-con input").value
+      const tempessage = ` <div class="message">
+          <p>${message}</p>
+        </div>`
+
+      document.querySelector(".messages").innerHTML += tempessage
+      document.querySelector(".typing-con input").value = ""
+    })
+
+
+
+    function appendincomingmessage(userimage, message) {
+      const tempmessage = `<div class="message">
+          <img src="${userimage}" alt="">
+          <p>${message}</p>
+        </div>`
+      document.querySelector(".messages").innerHTML += tempmessage
+    }
+
+    function appendchat(userimage, username) {
+      const chatTemplate = ` <div class="users">
+          <img
+            src="${userimage}"
+            alt="">
+          <h4>${username}</h4>
+        </div>`
+      document.querySelector(".left .bottom").innerHTML += chatTemplate
+    }
+  </script>
+</body>
+
+</html>
