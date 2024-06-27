@@ -1,3 +1,4 @@
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://0.0.0.0/socket").then(()=>console.log("connection done")).catch((error)=>{ console.log(error)
-})
+require("dotenv").config()
+
+mongoose.connect(process.env.DB_LINK).then(()=>console.log("connection done")).catch((error)=>{ console.log(error)})

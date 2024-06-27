@@ -11,12 +11,44 @@ body {
     width: 100%;
 }
 
+@media (max-width: 480px) {
+    main {
+      flex-direction: column;
+  
+      .left {
+        width: 100%;
+        height: 50%;
+      }
+  
+      .right {
+        width: 100%;
+        height: 50%;
+      }
+  
+      .left .top img,
+      .left .bottom img,
+      .right .chatting-user img,
+      .right .messages .message img {
+        height: 15vw;
+        width: 15vw;
+      }
+  
+      .right .messages .message p {
+        font-size: 4vw;
+      }
+  
+      .right .typing-con input {
+        font-size: 5vw;
+      }
+    }
+  }
+
 main {
     position: relative;
     height: 100%;
     width: 100%;
     display: flex;
-    background-color: #2d1616;
+    background-color: #1d1d1d;
 
     .left {
         height: 100%;
@@ -65,7 +97,7 @@ main {
                 background-color: #272727;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.019);
 
-                &:nth-last-child(1){
+                &:nth-last-child(1) {
                     border-bottom: none;
                 }
             }
@@ -85,16 +117,19 @@ main {
     }
 
     .right {
+        // padding-top: 20%;
+        display: none;
         position: relative;
+
         height: 100%;
         width: 75%;
         background-color: #1d1d1d;
-        padding-top: 8vw;
+        padding-top: 10vw;
         padding-left: .7vw;
 
         .chatting-user {
-            position:absolute;
-        //    z-index: -1;
+            position: absolute;
+            //    z-index: -1;
             top: 0;
             left: 0;
             cursor: pointer;
@@ -124,39 +159,47 @@ main {
                     opacity: .5;
                 }
             }
-           
+
         }
-        .messages{
+
+        .messages {
+            height: 100%;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
             gap: .8vw;
-            .message{
+            padding-bottom: 10vw;
+
+            .message {
                 display: flex;
                 gap: .5vw;
                 align-items: center;
 
-                
-                img{
+
+                img {
                     height: 3vw;
                     width: 3vw;
                     border-radius: 50%;
                 }
-                p{
+
+                p {
                     padding: .6vw .5vw;
                     background-color: #fff;
                     border-radius: .4vw;
                 }
-                &:has(img){
-                    p{
+
+                &:has(img) {
+                    p {
                         color: black;
                         background-color: rgb(19, 242, 153);
                     }
                 }
-                &:not(:has(img)){
-                    p{
-                        background-color:#252525;
+
+                &:not(:has(img)) {
+                    p {
+                        background-color: #353535;
                         margin-left: auto;
-                       color: white;
+                        color: white;
                     }
                 }
             }
@@ -183,15 +226,16 @@ main {
                 color: white;
                 border: none;
                 outline: none;
-                background-color: #2f2f2f;
+                background-color: #2f2f2f66;
                 font-size: 1.2vw;
             }
 
             button {
+                display: none;
                 border: none;
                 outline: none;
                 background-color: #2f2f2f;
-                 cursor: pointer;
+                cursor: pointer;
                 padding: .6vw;
                 border-radius: 50%;
 
