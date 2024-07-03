@@ -94,7 +94,7 @@
     })
 
     socket.on('max', messagePacket => {
-
+console.log(messagePacket);
       if (messagePacket.sender.username == receiver)
         appendincomingmessage(messagePacket.sender.profileimage, messagePacket.text)
     })
@@ -140,10 +140,6 @@
 
       })
     }
-
-
-
-
 
 
 
