@@ -11,21 +11,21 @@ const User = require("./models/userschema")
 io.on("connection", function (socket) {
     console.log("A user connected");
 
-    
-    
+
+
     socket.on("join", async function (username) {
         await User.findOneAndUpdate({
             username,
         }
-        ,
-        {
+            ,
+            {
                 socketId: socket.id
             })
-        })
-        
-        
-        socket.on("disconnect", async function () {
-            await User.findOneAndUpdate({
+    })
+
+
+    socket.on("disconnect", async function () {
+        await User.findOneAndUpdate({
             socketId: socket.id
         },
             {
@@ -33,23 +33,23 @@ io.on("connection", function (socket) {
             }
         )
     })
-    
-    
-socket.on("sony",async function(messageObject) {
-//  console.log(messageObject);
-await messagemodel.create({
-    receiver: messageObject.receiver,
-    sender: messageObject.sender,
-    text: messageObject.text
-})
+
+
+    socket.on("sony", async function (messageObject) {
+        //  console.log(messageObject);
+        await messagemodel.create({
+            receiver: messageObject.receiver,
+            sender: messageObject.sender,
+            text: messageObject.text
+        })
 
         const sender = await User.findOne({
             username: messageObject.sender
         })
         const receiver = await User.findOne({
-            username:messageObject.receiver
+            username: messageObject.receiver
         })
-   
+
 
         const messagePacket = {
             sender: sender,
@@ -60,8 +60,8 @@ await messagemodel.create({
         // console.log(messagePacket);
 
         socket.to(receiver.socketId).emit('max', messagePacket)
-        
-     })
+
+    })
 })
 
 

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const dotenv = require("dotenv")
 const User = require("../models/userschema")
-const messageModel= require("../models/messageschema")
+const messageModel = require("../models/messageschema")
 const passport = require("passport")
 const localStretegy = require("passport-local")
 passport.use(new localStretegy(User.authenticate()))
@@ -34,15 +34,15 @@ router.post("/login", passport.authenticate("local", {
 )
 )
 
-router.get("/getOnlineUser" ,isLoggedIn , async function(req,res,next){
+router.get("/getOnlineUser", isLoggedIn, async function (req, res, next) {
   // const onlineUser= req.onlineUser
   const loggedInUser = req.user
   const onlineUsers = await User.find({
-    socketId:{$ne: ""},
-    _id:{$ne: loggedInUser._id}
+    socketId: { $ne: "" },
+    _id: { $ne: loggedInUser._id }
   })
 
-  res.status(200).json({onlineUsers})
+  res.status(200).json({ onlineUsers })
 })
 
 
@@ -53,13 +53,13 @@ router.get('/getMessage', isLoggedIn, async (req, res, next) => {
 
 
   const messages = await messageModel.find({
-    $or: [ {
+    $or: [{
       sender: sender,
       receiver: receiver
     }, {
       sender: receiver,
       receiver: sender
-    } ]
+    }]
   })
 
   res.status(200).json({
